@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit.prevent="addNewTodo">
+    <form v-on:submit.prevent="addTodo">
       <label for="new-todo">Добавить задачу</label>
       <input
         v-model="newTodoText"
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import todoItem from "./Todos.vue";
+import todoItem from "../tests/Todos.vue";
 
 export default {
   name: "ListTodos",
@@ -50,7 +50,7 @@ export default {
     };
   },
   methods: {
-    addNewTodo() {
+    addTodo() {
       this.todos.push({
         id: this.nextTodoId,
         title: this.newTodoText,
