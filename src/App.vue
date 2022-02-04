@@ -2,10 +2,10 @@
   <div :id="$style.app">
     <h1>{{ text }}</h1>
     <Container>
-      <ApartmentFilterForm class="apartments-filter" @submit="logger"/>
+      <ApartmentFilterForm class="apartments-filter" @submit="setFilter" />
     </Container>
-
-    <ApartmentsList :items="apartments">
+    <p v-if="!filteredApartments.length">По вашему запросу ничего не найдено</p>
+    <ApartmentsList v-else :items="filteredApartments">
       <!-- <template v-slot:title>New title</template> -->
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
@@ -37,15 +37,37 @@ export default {
   },
   data() {
     return {
-      text: "",
       apartments,
+      filters: {
+        city: "",
+        price: 0,
+      },
     };
   },
-  computed: {},
+  computed: {
+    filteredApartments() {
+      return this.filterByCityName(this.filterByPrice(this.apartments))
+    },
+  },
   methods: {
-    logger(value) {
-      console.log(value)
-    }
+    setFilter({ city, price }) {
+      this.filters.city = city;
+      this.filters.price = price;
+    },
+    filterByCityName(apartments) {
+      if (!this.filters.city) return apartments;
+
+      return apartments.filter((apartment) => {
+        return apartment.location.city === this.filters.city;
+      });
+    },
+    filterByPrice(apartments) {
+      if (!this.filters.price) return apartments;
+
+      return apartments.filter((apartment) => {
+        return apartment.price >= this.filters.price;
+      });
+    },
   },
 };
 </script>
@@ -59,5 +81,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>

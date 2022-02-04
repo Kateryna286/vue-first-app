@@ -76,7 +76,7 @@ export default [
       rating: 2,
       price: 2642,
       location: {
-        city: 'Mariupol',
+        city: 'Zhovti Vody',
       },
       owner: {
         name: 'Wilma',
@@ -93,7 +93,7 @@ export default [
       rating: 2,
       price: 768,
       location: {
-        city: 'Mariupol',
+        city: 'Zhovti Vody',
       },
       owner: {
         name: 'Gabriella',
@@ -213,7 +213,7 @@ export default [
       rating: 2,
       price: 3530,
       location: {
-        city: 'Mariupol',
+        city: 'Zhovti Vody',
       },
       owner: {
         name: 'Tyrique',
@@ -315,7 +315,7 @@ export default [
       rating: 5,
       price: 2330,
       location: {
-        city: 'Mariupol',
+        city: 'Zhovti Vody',
       },
       owner: {
         name: 'Bart',
