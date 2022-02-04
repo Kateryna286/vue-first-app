@@ -1,23 +1,23 @@
 <template>
-    <input v-on="listeners" class="custom-input"/>
+  <input v-on="listeners" class="custom-input" />
 </template>
 
 <script>
-    export default {
-        name: 'CustomInput',
-computed: {
+export default {
+  name: "CustomInput",
+  computed: {
     listeners() {
-        return {
-            ...this.$listeners,
-            input: event => this.$emit('input', event.target.value)
-        }
-    }
-}
-    }
+      return {
+        ...this.$listeners,
+        input: (event) => this.$emit("input", event.target.value),
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/scss/variables';
+@import "../../assets/scss/variables";
 
 .wrapper-input {
   position: relative;
@@ -25,7 +25,7 @@ computed: {
 }
 .custom-input {
   height: 40px;
-//   width: 100%;
+  //   width: 100%;
   border: 2px solid $main-color;
   font-size: 18px;
   outline: none;
