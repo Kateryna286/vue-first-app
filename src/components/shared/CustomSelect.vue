@@ -4,6 +4,7 @@
       v-for="item in formattedItems"
       :value="item.value"
       :key="item.value"
+      :selected="item.selected"
     >
       {{ item.label }}
     </option>

@@ -1,10 +1,12 @@
 <template>
   <div :id="$style.app">
     <h1>{{ text }}</h1>
-    <CustomSelect :items="['Dnipro', 'Odesa', 'Lviv']"/>
-    <CustomInput v-model="text"/>
+    <Container>
+      <ApartmentFilterForm class="apartments-filter" @submit="logger"/>
+    </Container>
+
     <ApartmentsList :items="apartments">
-      <template v-slot:title>New title</template>
+      <!-- <template v-slot:title>New title</template> -->
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
           :key="apartment.id"
@@ -22,16 +24,16 @@
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import apartments from "./components/apartment/apartments";
-import CustomInput from './components/shared/CustomInput.vue'
-import CustomSelect from './components/shared/CustomSelect.vue'
+import ApartmentFilterForm from "./components/apartment/ApartmentFilterForm.vue";
+import Container from "./components/shared/Container.vue";
 
 export default {
   name: "App",
   components: {
     ApartmentsList,
     ApartmentsItem,
-    CustomInput,
-    CustomSelect
+    ApartmentFilterForm,
+    Container,
   },
   data() {
     return {
@@ -40,7 +42,11 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    logger(value) {
+      console.log(value)
+    }
+  },
 };
 </script>
 
@@ -53,4 +59,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
