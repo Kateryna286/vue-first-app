@@ -8,6 +8,7 @@
           <StarRating :rating="rating" />
         </div>
         <div class="apartments-item__price">UAH {{ price }}</div>
+        <router-link :to="{ name: 'apartment' }" class="apartments-item__link"></router-link>
       </div>
     </div>
   </div>
@@ -39,9 +40,7 @@ export default {
       default: "",
     },
   },
-  methods: {
-    
-  }
+  methods: {},
 };
 </script>
 
