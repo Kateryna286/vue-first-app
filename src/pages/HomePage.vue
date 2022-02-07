@@ -7,6 +7,7 @@
       <!-- <template v-slot:title>New title</template> -->
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
+          :id="apartment.id"
           :key="apartment.id"
           :descr="apartment.descr"
           :price="apartment.price"
@@ -25,7 +26,6 @@ import apartments from "../components/apartment/apartments";
 import ApartmentFilterForm from "../components/apartment/ApartmentFilterForm.vue";
 import Container from "../components/shared/Container.vue";
 
-
 export default {
   name: "App",
   components: {
@@ -33,7 +33,6 @@ export default {
     ApartmentsItem,
     ApartmentFilterForm,
     Container,
-    
   },
   data() {
     return {

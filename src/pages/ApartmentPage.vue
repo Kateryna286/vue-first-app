@@ -14,6 +14,9 @@ export default {
   components: {
     Container,
   },
+  mounted() {
+      console.log(this.$route.params.id)
+  }
 };
 </script>
 
