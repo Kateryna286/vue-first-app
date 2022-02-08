@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper-input">
-    <input 
-    v-on="listeners" 
-    v-bind="$attrs"
-    class="custom-input" 
-    :class="!isValid && 'custom-input--error'"
+    <input
+      v-on="listeners"
+      v-bind="$attrs"
+      class="custom-input"
+      :class="!isValid && 'custom-input--error'"
     />
     <span v-if="!isValid" class="custom-input__error">{{ error }}</span>
   </div>
@@ -16,14 +16,15 @@ export default {
   data() {
     return {
       isValid: true,
-      error: ''
+      error: "",
     };
   },
+  inject: ["form"],
   inheritAttrs: false,
   props: {
     value: {
       type: String,
-      default: ''
+      default: "",
     },
     errorMessage: {
       type: String,
@@ -39,29 +40,42 @@ export default {
       return {
         ...this.$listeners,
         input: (event) => this.$emit("input", event.target.value),
-        
       };
     },
   },
   watch: {
-    value(value) {
-      this.validate(value);
-      console.log(value)
+    value() {
+      this.validate();
     },
+  },
+  mounted() {
+    if (!this.form) return;
+
+    this.form.registerInput(this);
+  },
+  beforeDestroy() {
+    if (!this.form) return;
+
+    this.form.unRegisterInput(this);
   },
   methods: {
     validate() {
       this.isValid = this.rules.every((rule) => {
-        const {hasPassed, message} = rule(this.value)
+        const { hasPassed, message } = rule(this.value);
 
-        if(!hasPassed) {
-          this.error = message || this.errorMessage
+        if (!hasPassed) {
+          this.error = message || this.errorMessage;
         }
 
-        return hasPassed
-      })
+        return hasPassed;
+      });
+      
+      return this.isValid;
     },
-  }
+    reset() {
+      this.$emit("input", "");
+    },
+  },
 };
 </script>
 
