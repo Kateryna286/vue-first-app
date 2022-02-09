@@ -1,7 +1,7 @@
 <template>
-  <Container>
+<SectionSpacer>
+<Container>
     <ApartmentFilterForm class="apartments-filter" @submit="setFilter" />
-
     <p v-if="!filteredApartments.length">По вашему запросу ничего не найдено</p>
     <ApartmentsList v-else :items="filteredApartments">
       <!-- <template v-slot:title>New title</template> -->
@@ -17,6 +17,8 @@
       </template>
     </ApartmentsList>
   </Container>
+</SectionSpacer>
+  
 </template>
 
 <script>
@@ -24,6 +26,7 @@ import ApartmentsList from "../components/apartment/ApartmentsList.vue";
 import ApartmentsItem from "../components/apartment/ApartmentsItem.vue";
 import ApartmentFilterForm from "../components/apartment/ApartmentFilterForm.vue";
 import Container from "../components/shared/Container.vue";
+import SectionSpacer from '../components/shared/SectionWithHeaderSpacer.vue'
 
 import { getApartsmentsList } from "../services/apartments.service";
 
@@ -34,6 +37,7 @@ export default {
     ApartmentsItem,
     ApartmentFilterForm,
     Container,
+    SectionSpacer
   },
   data() {
     return {

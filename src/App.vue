@@ -16,7 +16,6 @@ import Header from "./components/Header.vue";
 export default {
   name: "App",
   components: {
-    
     Footer,
     Header,
   },
@@ -46,6 +45,6 @@ export default {
 
 .content {
   flex-grow: 1;
-  padding-top: 120px;
+  //padding-top: 60px;
 }
 </style>
