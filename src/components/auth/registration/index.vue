@@ -1,6 +1,6 @@
 <template>
   <AuthContainer class="registration">
-    <MainTitle class="registration__title">Логин</MainTitle>
+    <MainTitle class="registration__title">Регистрация</MainTitle>
     <Form ref="form" @submit.prevent="handleSubmit" class="registration__form">
       <CustomInput
         v-model="formData.name"
@@ -36,7 +36,9 @@
         :rules="confirmPasswordRules"
         class="registration__input"
       />
-      <Button type="submit" class="registration__btn">Вход</Button>
+      <Button type="submit" :loading="loading" class="registration__btn"
+        >Вход</Button
+      >
     </Form>
   </AuthContainer>
 </template>
@@ -71,6 +73,7 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      loading: false,
     };
   },
   computed: {
@@ -107,11 +110,14 @@ export default {
 
       if (isFormValid) {
         try {
-          const { data } = await registerUser({name, email, password});
+          this.loading = true;
+          const { data } = await registerUser({ name, email, password });
           console.log(data);
           form.reset();
         } catch (error) {
           console.log(error);
+        } finally {
+          this.loading = false;
         }
       }
     },
