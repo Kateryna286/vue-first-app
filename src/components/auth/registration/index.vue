@@ -1,14 +1,22 @@
 <template>
-  <AuthContainer class="login">
-    <MainTitle class="login__title">Логин</MainTitle>
-    <Form ref="form" @submit.prevent="handleSubmit" class="login__form">
+  <AuthContainer class="registration">
+    <MainTitle class="registration__title">Логин</MainTitle>
+    <Form ref="form" @submit.prevent="handleSubmit" class="registration__form">
+      <CustomInput
+        v-model="formData.name"
+        name="name"
+        placeholder="Name"
+        autocomplete="username"
+        :rules="nameRules"
+        class="registration__input"
+      />
       <CustomInput
         v-model="formData.email"
         name="email"
         placeholder="Email"
         autocomplete="email"
         :rules="emailRules"
-        class="login__input"
+        class="registration__input"
       />
       <CustomInput
         v-model="formData.password"
@@ -17,9 +25,18 @@
         autocomplete="current-password"
         type="password"
         :rules="passwordRules"
-        class="login__input"
+        class="registration__input"
       />
-      <Button type="submit" class="login__btn">Вход</Button>
+      <CustomInput
+        v-model="formData.confirmPassword"
+        name="password"
+        placeholder="Confirm password"
+        autocomplete="current-password"
+        type="password"
+        :rules="confirmPasswordRules"
+        class="registration__input"
+      />
+      <Button type="submit" class="registration__btn">Вход</Button>
     </Form>
   </AuthContainer>
 </template>
@@ -35,10 +52,10 @@ import {
   passwordValidation,
   isRequired,
 } from "../../../utils/validationRules";
-import { loginUser } from "../../../services/auth.service";
+import { registerUser } from "../../../services/auth.service";
 
 export default {
-  name: "LoginForm",
+  name: "RegistrationForm",
   components: {
     Form,
     CustomInput,
@@ -49,8 +66,10 @@ export default {
   data() {
     return {
       formData: {
+        name: "",
         email: "",
         password: "",
+        confirmPassword: "",
       },
     };
   },
@@ -62,21 +81,35 @@ export default {
         isRequired,
       };
     },
+    nameRules() {
+      return [this.rules.isRequired];
+    },
     emailRules() {
       return [this.rules.isRequired, this.rules.emailValidation];
     },
     passwordRules() {
-      return [this.rules.isRequired];
+      return [this.rules.isRequired, this.rules.passwordValidation];
+    },
+    confirmPasswordRules() {
+      return [
+        (val) => ({
+          hasPassed: val === this.formData.password,
+          message: "Пароли не совпадают",
+        }),
+      ];
     },
   },
   methods: {
     async handleSubmit() {
-      const isFormValid = this.$refs.form.validate();
+      const { form } = this.$refs;
+      const isFormValid = form.validate();
+      const { name, email, password } = this.formData;
 
       if (isFormValid) {
         try {
-          const { data } = await loginUser(this.formData);
+          const { data } = await registerUser({name, email, password});
           console.log(data);
+          form.reset();
         } catch (error) {
           console.log(error);
         }
@@ -87,7 +120,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
+.registration {
   &__form {
     display: block;
     flex-direction: column;
