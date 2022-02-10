@@ -1,34 +1,25 @@
 <template>
   <div id="app">
+    <Notifications />
     <div class="content">
-    <Header />
-    <router-view></router-view>
+      <Header />
+      <router-view></router-view>
     </div>
     <Footer />
   </div>
 </template>
 
 <script>
-
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
+import Notifications from "./components/notifications/index.vue";
 
 export default {
   name: "App",
   components: {
     Footer,
     Header,
-  },
-  data() {
-    return {
-      
-    };
-  },
-  computed: {
-    
-  },
-  methods: {
-    
+    Notifications,
   },
 };
 </script>
@@ -45,6 +36,5 @@ export default {
 
 .content {
   flex-grow: 1;
-  //padding-top: 60px;
 }
 </style>
