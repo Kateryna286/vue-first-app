@@ -5,6 +5,7 @@
       <Header />
       <router-view></router-view>
     </div>
+    {{ $store.state.userName}}
     <Footer />
   </div>
 </template>
