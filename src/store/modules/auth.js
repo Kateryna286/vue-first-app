@@ -8,6 +8,11 @@ const initialState = {
 export default {
     namespaced: true,
     state: { ...initialState },
+    getters: {
+        isLoggedIn(state) {
+            return Boolean(state.token)
+        }
+    },
     mutations: {
         SET_USER_DATA(state, userData) {
             state.user = userData
