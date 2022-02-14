@@ -35,7 +35,8 @@ import {
   passwordValidation,
   isRequired,
 } from "../../../utils/validationRules";
-// import { loginUser } from "../../../services/auth.service";
+import { mapActions } from "vuex";
+
 
 export default {
   name: "LoginForm",
@@ -71,6 +72,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("auth", ["login"]),
     async handleSubmit() {
       const { form } = this.$refs;
       const isFormValid = form.validate();
@@ -79,13 +81,7 @@ export default {
         try {
           this.loading = true;
 
-          await this.$store.dispatch('login', this.formData)
-
-          // const { data } = await loginUser(this.formData);
-          // const { user, token } = data;
-
-          // this.$store.commit("setUserData", user);
-          // this.$store.commit("setToken", token);
+          await this.login(this.formData)
 
           this.$router.push({ name: "homepage" });
           form.reset();
