@@ -24,7 +24,9 @@
         >
       </li>
       <li class="account-actions__item">
-        <button class="account-actions__logout" @click="logout">Выйти</button>
+        <button class="account-actions__logout" @click="handleLogout">
+          Выйти
+        </button>
       </li>
     </ul>
   </div>
@@ -42,7 +44,7 @@ export default {
   },
 
   methods: {
-      ...mapActions('auth', ['logout']),
+    ...mapActions("auth", ["logout"]),
     open() {
       this.isOpen = true;
     },
@@ -51,6 +53,22 @@ export default {
     },
     toggle() {
       this.isOpen = !this.isOpen;
+    },
+    async handleLogout() {
+      try {
+        await this.logout();
+
+        const { requiresAuth } = this.$route.meta;
+        
+        if (requiresAuth) {
+          this.$router.push({ name: 'login-page' });
+        }
+      } catch (error) {
+        this.$notify({
+          type: "error",
+          title: "Логаут не удался",
+        });
+      }
     },
   },
 };
